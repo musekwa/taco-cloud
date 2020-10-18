@@ -1,12 +1,17 @@
 package tacos;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.CreditCardNumber;
 
 public class Order {
+	
+	private Long id;
+	
+	private Date placedAt;
 	
 	@NotBlank(message="Name is required")
 	private String name;
@@ -23,14 +28,36 @@ public class Order {
 	@NotBlank(message="Provide your zip number")
 	private String zip;
 	
-	@CreditCardNumber(message="Not a valid credit number")
+	//@CreditCardNumber(message="Not a valid credit number")
 	private String ccNumber;
 	
-	@Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$")
+	//@Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([1-9][0-9])$")
 	private String ccExpiration;
 	
 	@Digits(integer=3, fraction=0, message="Invalid CVV")
 	private String ccCVV;
+	
+	private List<Taco> tacos;
+	
+	public Order() {
+		this.tacos = new ArrayList<>();
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public Date getPlacedAt() {
+		return placedAt;
+	}
+	
+	public void setPlacedAt(Date placedAt) {
+		this.placedAt = placedAt;
+	}
 	
 	
 	public String getName() {
@@ -81,10 +108,26 @@ public class Order {
 	public void setCcCVV(String ccCVV) {
 		this.ccCVV = ccCVV;
 	}
+	
+	public void setTacos(List<Taco> tacos) {
+		this.tacos = tacos;
+	}
+	
+	public List<Taco> getTacos(){
+		return tacos;
+	}
+	
+	public void addDesign(Taco taco) {
+		this.tacos.add(taco);
+	}
+
 	@Override
 	public String toString() {
-		return "Order [name=" + name + ", street=" + street + ", city=" + city + ", state=" + state + ", zip=" + zip
-				+ ", ccNumber=" + ccNumber + ", ccExpiration=" + ccExpiration + ", ccCVV=" + ccCVV + "]";
+		return "Order [id=" + id + ", placedAt=" + placedAt + ", name=" + name + ", street=" + street + ", city=" + city
+				+ ", state=" + state + ", zip=" + zip + ", ccNumber=" + ccNumber + ", ccExpiration=" + ccExpiration
+				+ ", ccCVV=" + ccCVV + ", tacos=" + tacos + "]";
 	}
+	
+	
 
 }
